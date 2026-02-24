@@ -1,5 +1,5 @@
 # Overview
-A **Tampermonkey** userscript for Google Calendar that simply removes **Birthdays** and **Tasks** from **My calendars** to free up that valuable space for all of your exciting PTO and team meeting calendars.
+A **Tampermonkey** userscript for **Google Calendar** that simply removes **Birthdays** and **Tasks** from **My calendars** to free up that valuable space for all of your exciting PTO and team meeting calendars.
 
 It does this seamlessly and efficiently, only when the elements are redrawn or updated.
 
