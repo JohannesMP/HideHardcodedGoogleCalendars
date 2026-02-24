@@ -1,2 +1,2 @@
 # Overview
-A basic Tampermonkey Userscript for hiding calendar entries you normally cannot hide such as 'Tasks' and 'Birthdays'.
+A basic Tampermonkey Userscript for Google Calendar to hide hardcoded calendars like 'Tasks' and 'Birthdays' in 'My calendars'.
