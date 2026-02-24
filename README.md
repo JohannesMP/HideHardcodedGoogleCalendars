@@ -17,7 +17,7 @@ It does this seamlessly and efficiently, only when the elements are redrawn or u
 - Make sure you you have have the tampermonkey extension installed and permissions enabled:
     <img width="651" height="761" alt="Tampermonkey settings" src="https://github.com/user-attachments/assets/ab78a19c-5636-4900-86da-1615b6d37c20" />
 
-- If it looks like something broke please submite an [issue ticket](https://github.com/JohannesMP/HideHardcodedGoogleCalendars/edit/main/README.md)
+- If it looks like something broke please submit an [issue ticket](https://github.com/JohannesMP/HideHardcodedGoogleCalendars/edit/main/README.md)
 
 -----
 
