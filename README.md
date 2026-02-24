@@ -6,8 +6,12 @@ It does this seamlessly and efficiently, only when the elements are redrawn or u
 # To Install
 - Make sure you have the [Tampermonkey](https://www.tampermonkey.net/) browser extension installed, enabled, and the **Allow User Scripts** permission checked in its **Manage Extension** view.
 - Open the raw script from this repo: [/JohannesMP/HideHardcodedGoogleCalendars/raw/refs/heads/main/HideHardcodedGoogleCalendars.user.js](https://github.com/JohannesMP/HideHardcodedGoogleCalendars/raw/refs/heads/main/HideHardcodedGoogleCalendars.user.js)
-    - If you have Tampermonkey enabled it should prompt you to install the script.
-    - Alternatively you can past the script raw URL into the 'Import from URL' field in Tampermonkey's [Utilities tab](chrome-extension://dhdgffkkebhmkfjojejmpbldmpobfkfo/options.html#nav=utils)
+    - If you have Tampermonkey enabled it should prompt you to install the script:
+        <img width="616" height="335" alt="Tampermonkey install screen" src="https://github.com/user-attachments/assets/c492408c-d256-44eb-a1a2-409ec9cfd0dd" />
+
+    - Alternatively you can past the script raw URL into the 'Import from URL' field in Tampermonkey's [Utilities tab](chrome-extension://dhdgffkkebhmkfjojejmpbldmpobfkfo/options.html#nav=utils):
+        <img width="1016" height="368" alt="Tampermonkey utilities tab with import from url field selected" src="https://github.com/user-attachments/assets/cadd760d-bd56-4144-a131-09e40eb2f0e6" />
+
 
 # Troubleshooting
 - Make sure you you have have the tampermonkey extension installed and permissions enabled:
