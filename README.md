@@ -10,7 +10,7 @@ A **Tampermonkey** userscript for **Google Calendar** that simply removes **Birt
 You can finally have more space for all of your exciting PTO and team meeting calendars!
 
 # To Install
-- Make sure you have the [Tampermonkey](https://www.tampermonkey.net/) browser extension installed, enabled, and the **Allow User Scripts** permission checked in its **Manage Extension** view.
+- Make sure you have the [Tampermonkey](https://www.tampermonkey.net/) browser extension installed, enabled, and the **Allow User Scripts** permission checked in its **Manage Extension** view (see [Troubleshooting](#troubleshooting).
 - Open the raw script from this repo: [/JohannesMP/HideHardcodedGoogleCalendars/raw/refs/heads/main/HideHardcodedGoogleCalendars.user.js](https://github.com/JohannesMP/HideHardcodedGoogleCalendars/raw/refs/heads/main/HideHardcodedGoogleCalendars.user.js)
     - If you have Tampermonkey enabled it should prompt you to install the script:
         <img width="616" height="335" alt="Tampermonkey install screen" src="https://github.com/user-attachments/assets/c492408c-d256-44eb-a1a2-409ec9cfd0dd" />
