@@ -2,6 +2,7 @@
 // @name         Google Calendar - Remove Birthdays
 // @author       JohannesMP
 // @source       https://github.com/JohannesMP
+// @updateURL    https://github.com/JohannesMP/GoogleCalendarRemoveBirthdays/raw/refs/heads/main/GoogleCalendarRemoveBirthdays.user.js
 // @downloadURL  https://github.com/JohannesMP/GoogleCalendarRemoveBirthdays/raw/refs/heads/main/GoogleCalendarRemoveBirthdays.user.js
 // @supportURL   https://github.com/JohannesMP/GoogleCalendarRemoveBirthdays/issues
 // @version      2026-02-24
@@ -15,7 +16,9 @@
     'use strict';
 
     const TARGET_LABEL_TEXT = 'Birthdays';
-    const LIST_ADJUSTED_ATTR = 'data-tm-bdays-list-adjusted';
+    const LIST_ROW_HEIGHT_ATTR = 'data-tm-bdays-row-height';
+
+    const ignoreStyleMutations = new WeakSet();
 
     function getTranslateY(element) {
         const transform = element.style?.transform ?? '';
@@ -27,6 +30,10 @@
 
     function setTranslateY(element, newY) {
         const transform = element.style?.transform ?? '';
+
+        ignoreStyleMutations.add(element);
+        queueMicrotask(() => ignoreStyleMutations.delete(element));
+
         if (!transform) {
             element.style.transform = `translateY(${newY}px)`;
             return;
@@ -43,21 +50,24 @@
         element.style.transform = `${transform} translateY(${newY}px)`.trim();
     }
 
-    function tryAdjustInlineHeight(listElement, deltaPx) {
-        const inlineHeight = listElement.style?.height ?? '';
-        const match = inlineHeight.match(/(-?\d+(?:\.\d+)?)px/i);
-        if (!match) return;
-
-        const currentHeight = Number(match[1]);
-        listElement.style.height = `${Math.max(0, currentHeight - deltaPx)}px`;
-    }
-
     function findLabelElement(groupElement) {
         const all = groupElement.querySelectorAll('*');
         for (const el of all) {
             if (el.textContent?.trim() === TARGET_LABEL_TEXT) return el;
         }
         return null;
+    }
+
+    function repackList(list) {
+        const rowHeight = Number(list.getAttribute(LIST_ROW_HEIGHT_ATTR));
+        if (!rowHeight || rowHeight < 1) return;
+
+        const rows = Array.from(list.children);
+        for (let i = 0; i < rows.length; i++) {
+            setTranslateY(rows[i], i * rowHeight);
+        }
+
+        list.style.height = `${rowHeight * rows.length}px`;
     }
 
     function processGroup(groupElement) {
@@ -67,32 +77,21 @@
         const list = label.closest('[role="list"]');
         if (!list) return;
 
-        const rows = Array.from(list.children).filter((n) => n instanceof Element);
+        const rows = Array.from(list.children);
         const targetRow = rows.find((row) => row.contains(label));
         if (!targetRow) return;
 
-        // We know that before removing Birthdays you will always have two rows
+        // Can assume we will always have at least two calendars
         const rowHeight = getTranslateY(rows[1]);
         if (!rowHeight || rowHeight < 1) {
             targetRow.remove();
             return;
         }
 
-        // Always shift rows below the target row
-        const targetIndex = rows.indexOf(targetRow);
-        for (let i = targetIndex + 1; i < rows.length; i++) {
-            const row = rows[i];
-            const y = getTranslateY(row);
-            if (y !== null) setTranslateY(row, y - rowHeight);
-        }
-
-        // Only adjust list height once per list instance
-        if (!list.hasAttribute(LIST_ADJUSTED_ATTR)) {
-            tryAdjustInlineHeight(list, rowHeight);
-            list.setAttribute(LIST_ADJUSTED_ATTR, '1');
-        }
-
         targetRow.remove();
+
+        list.setAttribute(LIST_ROW_HEIGHT_ATTR, String(rowHeight));
+        repackList(list);
     }
 
     function processExpandedGroups(root = document) {
@@ -104,11 +103,26 @@
         for (const m of mutations) {
             if (m.type === 'childList' && m.addedNodes?.length) {
                 processExpandedGroups(document);
-                return;
+                continue;
             }
-            if (m.type === 'attributes' && (m.attributeName === 'aria-hidden' || m.attributeName === 'data-collapsed')) {
-                processExpandedGroups(document);
-                return;
+
+            if (m.type === 'attributes') {
+                if (m.attributeName === 'aria-hidden' || m.attributeName === 'data-collapsed') {
+                    processExpandedGroups(document);
+                    continue;
+                }
+
+                if (m.attributeName === 'style' && m.target instanceof Element) {
+                    if (ignoreStyleMutations.has(m.target)) continue;
+
+                    const list = m.target.closest('[role="list"]');
+                    if (!list) continue;
+
+                    if (list.hasAttribute(LIST_ROW_HEIGHT_ATTR)) {
+                        repackList(list);
+                        continue;
+                    }
+                }
             }
         }
     });
@@ -117,7 +131,6 @@
         subtree: true,
         childList: true,
         attributes: true,
-        attributeFilter: ['aria-hidden', 'data-collapsed'],
     });
 
     processExpandedGroups(document);
