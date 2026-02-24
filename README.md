@@ -3,7 +3,7 @@ A **Tampermonkey** userscript for **Google Calendar** that simply removes **Birt
 
 - It does this seamlessly and efficiently, only when the elements are redrawn or updated.
 - It hides both Birthdays and Tasks from the My calendars list.
-    - If you want to keep either of these you can comment them out in the script's // --- Config --- section.
+    - If you want to keep either of these you can comment them out in the script's **`--- Config ---`** section:
         <img width="518" height="307" alt="image" src="https://github.com/user-attachments/assets/3a60ca34-b02f-406c-b6f9-032d62139554" />
 
 
