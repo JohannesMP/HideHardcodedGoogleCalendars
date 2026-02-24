@@ -5,7 +5,7 @@
 // @updateURL    https://github.com/JohannesMP/GoogleCalendarRemoveBirthdays/raw/refs/heads/main/GoogleCalendarRemoveBirthdays.user.js
 // @downloadURL  https://github.com/JohannesMP/GoogleCalendarRemoveBirthdays/raw/refs/heads/main/GoogleCalendarRemoveBirthdays.user.js
 // @supportURL   https://github.com/JohannesMP/GoogleCalendarRemoveBirthdays/issues
-// @version      v2 2026-02-24
+// @version      v2_2026-02-24
 // @description  Remove the Birthdays calendar
 // @match        https://calendar.google.com/*
 // @grant        none
